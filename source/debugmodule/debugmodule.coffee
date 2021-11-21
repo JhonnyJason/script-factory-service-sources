@@ -9,7 +9,7 @@ debugmodule.initialize = () ->
 debugmodule.modulesToDebug = 
     unbreaker: true
     # configmodule: true
-    # startupmodule: true
+    startupmodule: true
 
 #region exposed variables
 
