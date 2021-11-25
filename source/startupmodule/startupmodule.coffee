@@ -9,20 +9,26 @@ log = (arg) ->
 pg = require("pg")
 client = new pg.Client({
   user: 'testuser',
-  host: '10.143.13.224',
+  host: '/run/postgresql',
   database: 'testdb',
   password: '',
   port: 5432,
 })
 
 ############################################################
-startupmodule.initialize = () ->
+sci = null
+
+############################################################
+startupmodule.initialize = ->
     log "startupmodule.initialize"
+    sci = allModules.scimodule
     return
 
 ############################################################
 startupmodule.serviceStartup = ->
     log "startupmodule.serviceStartup"
+    sci.prepareAndExpose()
+
     await client.connect()
     res = await client.query('SELECT $1::text as message', ['Hello world!'])
     log(res.rows[0].message)
